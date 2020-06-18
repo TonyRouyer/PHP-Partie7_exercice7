@@ -26,7 +26,10 @@
     </head>
     <body>
         <?php 
-            if ( isset($_POST['civilite']) && isset($_POST['lastname']) && isset($_POST['firstname']) ) {
+            if ( isset($_POST['civilite']) && preg_match("/Mr|Mme/", $_POST['firstname']) &&
+                 isset($_POST['lastname']) && preg_match("/^[a-zA-Z]+[-\s]?[a-z]+$/", $_POST['firstname']) &&
+                 isset($_POST['firstname']) && preg_match("/^[a-zA-Z]+[-\s]?[a-z]+$/", $_POST['firstname'])
+                 ) {
                 $infosfichier = pathinfo($_FILES['sendFile']['name']);
                 $extension_upload = $infosfichier['extension'];?>
             <p><?= 'bonjour ' . htmlspecialchars($_POST['civilite']) . ' ' . htmlspecialchars($_POST['lastname']) . ' ' . htmlspecialchars($_POST['firstname']) .  ', vous aller bien ?' ?></p>
