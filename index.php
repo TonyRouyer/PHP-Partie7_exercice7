@@ -1,3 +1,4 @@
+<?php include 'indexController.php'; ?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
     <head>
@@ -26,18 +27,13 @@
     </head>
     <body>
         <?php 
-            if ( isset($_POST['civilite']) && preg_match("/Mr|Mme/", $_POST['firstname']) &&
-                 isset($_POST['lastname']) && preg_match("/^[a-zA-Z]+[-\s]?[a-z]+$/", $_POST['firstname']) &&
-                 isset($_POST['firstname']) && preg_match("/^[a-zA-Z]+[-\s]?[a-z]+$/", $_POST['firstname'])
-                 ) {
-                $infosfichier = pathinfo($_FILES['sendFile']['name']);
-                $extension_upload = $infosfichier['extension'];?>
-            <p><?= 'bonjour ' . htmlspecialchars($_POST['civilite']) . ' ' . htmlspecialchars($_POST['lastname']) . ' ' . htmlspecialchars($_POST['firstname']) .  ', vous aller bien ?' ?></p>
-            <p><?= 'Vous avez envoyer ' . $_FILES['sendFile']['name'] . ' Il s\'agit d\'un fichier .' . $extension_upload ?></p>
-            <?php }else {?>
+            if(isset($_REQUEST['filesForm']) && count($formError) == 0) { ?>
+                        <p><?= 'bonjour ' . $civility . ' ' . $firstname . ' ' . $lastname ?></p>
+                        <p><?= $sendFile ?></p>
+            <?php }else { ?>
                 <form action="index.php" method="POST" enctype="multipart/form-data">
-                    <label for="civilite"> Civilité :
-                    <select name="civilite" id="civilite">
+                    <label for="civility"> Civilité :
+                    <select name="civility" id="civilite">
                         <option value="Mr">Monsieur</option>
                         <option value="Mme">Madame</option>
                     </select>
@@ -45,7 +41,8 @@
                     <label for="firstname">Prénom : <input type="text" id="firstname" name="firstname" /></label>
                     <label for="lastname">Nom : <input type="text" id="lastname" name="lastname" /></label>
                     <input type="file" name="sendFile" id="sendFile" />
-                    <input type="submit" id="sendBtn" />
-                </form><?php }?>
+                    <input type="submit" id="sendBtn" name="filesForm" />
+                </form>
+        <?php  } ?>
     </body>
 </html>
